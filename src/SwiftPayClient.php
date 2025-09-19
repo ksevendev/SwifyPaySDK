@@ -1,13 +1,13 @@
 <?php
 
-namespace SwiftPay;
+namespace SwiftPaySDK;
 
 use GuzzleHttp\Client;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Ramsey\Uuid\Uuid;
 use Respect\Validation\Validator as v;
-use SwiftPay\Exceptions\SwiftPayException;
+use SwiftPaySDK\Exceptions\SwiftPayException;
 
 class SwiftPayClient
 {

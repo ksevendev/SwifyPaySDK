@@ -1,5 +1,5 @@
 {
-  "name": "kseven/swiftpay",
+  "name": "kseven/swiftpay-sdk",
   "description": "SDK PHP para SwiftPay",
   "require": {
     "php": ">=8.0",
@@ -12,7 +12,7 @@
   },
   "autoload": {
     "psr-4": {
-        "SwiftPay\\": "src/" 
+        "SwiftPaySDK\\": "src/" 
     }
   }
 }

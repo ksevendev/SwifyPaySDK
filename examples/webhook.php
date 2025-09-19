@@ -4,7 +4,7 @@ require __DIR__ . "/../vendor/autoload.php";
 
 use Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
-use SwiftPay\WebhookHandler;
+use SwiftPaySDK\WebhookHandler;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->load();

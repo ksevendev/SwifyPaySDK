@@ -26,15 +26,15 @@ LOG_PATH=./logs/swiftpay.log
 
 Crie a pasta `logs` com permissão de escrita.
 
-## Estrutura de arquivos sugerida
+## Estrutura de arquivos
 
 ```
 swiftpay-sdk/
 ├─ public/
 │  ├─ webhook.php
-│  ├─ deposit_example.php
-│  └─ withdraw_example.php
-├─ src/SwiftPay/
+│  ├─ deposit.php
+│  └─ withdraw.php
+├─ src/
 │  ├─ SwiftPayClient.php
 │  ├─ WebhookHandler.php
 │  └─ Exceptions/SwiftPayException.php

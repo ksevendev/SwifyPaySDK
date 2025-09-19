@@ -1,5 +1,5 @@
 <?php
 
-namespace SwiftPay\Exceptions;
+namespace SwiftPaySDK\Exceptions;
 
 class SwiftPayException extends \Exception {}

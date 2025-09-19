@@ -1,9 +1,9 @@
 <?php
 
-namespace SwiftPay;
+namespace SwiftPaySDK;
 
 use Symfony\Component\HttpFoundation\Request;
-use SwiftPay\Exceptions\SwiftPayException;
+use SwiftPaySDK\Exceptions\SwiftPayException;
 
 class WebhookHandler
 {

@@ -3,7 +3,7 @@
 require __DIR__ . "/../vendor/autoload.php";
 
 use Dotenv\Dotenv;
-use SwiftPay\SwiftPayClient;
+use SwiftPaySDK\SwiftPayClient;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->load();
