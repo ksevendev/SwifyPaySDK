@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwiftPay SDK & API — Documentação e Reference</title>
+  <style>
+    body { font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; color: #333; background: #f9f9f9; line-height: 1.8; font-size: 16px; }
+    header { background: linear-gradient(90deg, #042A2F, #063A41); color: #fff; padding: 25px 20px; text-align: center; }
+    header h1 { margin: 0; font-size: 32px; font-weight: 700; }
+    header p { font-size: 18px; margin-top: 5px; }
+    nav { background: #067C7F; padding: 12px; display: flex; flex-wrap: wrap; justify-content: center; }
+    nav a { color: #fff; margin: 5px 20px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+    nav a:hover { border-bottom: 2px solid #67B846; }
+    section { padding: 35px 25px; max-width: 1100px; margin: 25px auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h2 { color: #042A2F; margin-top: 20px; border-bottom: 3px solid #67B846; padding-bottom: 8px; font-size: 26px; }
+    h3 { color: #063A41; margin-top: 18px; font-size: 20px; }
+    pre, code { background: #f4f4f4; padding: 12px; border-radius: 6px; font-family: 'Fira Code', Consolas, monospace; font-size: 15px; }
+    pre { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 15px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background: #063A41; color: #fff; }
+    footer { text-align: center; padding: 25px; background: #042A2F; color: #fff; margin-top: 25px; border-radius: 0 0 12px 12px; font-size: 14px; }
+    @media (max-width: 768px) { body { font-size: 15px; } nav a { margin: 5px 10px; } }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>SwiftPay SDK & API — Documentação e Reference</h1>
+    <p>Integração completa com a API PIX da SwiftPay</p>
+  </header>
+
+  <nav>
+    <a href="#intro">Introdução</a>
+    <a href="#instalacao">Instalação</a>
+    <a href="#config">Configuração</a>
+    <a href="#sdk">SDK</a>
+    <a href="#api">API Direta</a>
+    <a href="#webhook">Webhook</a>
+    <a href="#seguranca">Segurança</a>
+  </nav>
+
+  <section id="intro">
+    <h2>Introdução</h2>
+    <p>Esta documentação fornece tanto a referência completa do <strong>SwiftPay SDK</strong> quanto a referência direta da <strong>API PIX</strong>, permitindo integração segura e precisa em PHP.</p>
+  </section>
+
+  <section id="instalacao">
+    <h2>Instalação</h2>
+    <pre><code>composer require kseven/swiftpay-sdk</code></pre>
+    <p>Certifique-se de ter PHP >= 8.0 e Guzzle 7 instalados.</p>
+  </section>
+
+  <section id="config">
+    <h2>Configuração</h2>
+    <h3>.env</h3>
+    <pre><code>SWIFTPAY_URI=https://swiftpay.com.br/api/
+SWIFTPAY_TOKEN=seu_token
+SWIFTPAY_SECRET=seu_secret
+WEBHOOK_SECRET=seu_webhook_secret
+LOG_PATH=./logs/swiftpay.log</code></pre>
+  </section>
+
+  <section id="sdk">
+    <h2>SwiftPay SDK — Reference</h2>
+    <h3>SwiftPayClient</h3>
+    <table>
+      <tr><th>Método</th><th>Descrição</th><th>Parâmetros</th><th>Retorno</th></tr>
+      <tr>
+        <td>deposit(array $data)</td>
+        <td>Cria um pagamento PIX (Depósito)</td>
+        <td>amount, debtor_name, email, debtor_document_number, phone, method_pay, postback</td>
+        <td>array com idTransaction, qrcode, qr_code_image_url</td>
+      </tr>
+      <tr>
+        <td>withdraw(array $data)</td>
+        <td>Realiza um saque via PIX</td>
+        <td>amount, pixKey, pixKeyType, baasPostbackUrl</td>
+        <td>array com id, amount, pixKey, pixKeyType, withdrawStatusId</td>
+      </tr>
+    </table>
+
+    <h3>WebhookHandler</h3>
+    <table>
+      <tr><th>Método</th><th>Descrição</th><th>Parâmetros</th><th>Retorno</th></tr>
+      <tr>
+        <td>__construct(string $secret)</td>
+        <td>Inicializa handler com segredo para validar HMAC</td>
+        <td>secret</td>
+        <td>void</td>
+      </tr>
+      <tr>
+        <td>handle(Request $request)</td>
+        <td>Valida webhook e retorna dados</td>
+        <td>Request $request</td>
+        <td>array com status, idTransaction, typeTransaction</td>
+      </tr>
+    </table>
+  </section>
+
+  <section id="api">
+    <h2>API PIX Direta — Reference</h2>
+    <h3>Depósito (PIX IN)</h3>
+    <pre><code>POST https://swiftpay.com.br/api/wallet/deposit/payment
+Headers: Content-Type: application/json, Accept: application/json
+Body: {
+  "token": "seu_token",
+  "secret": "seu_secret",
+  "postback": "rota_callback",
+  "amount": 100.00,
+  "debtor_name": "Nome",
+  "email": "email@dominio.com",
+  "debtor_document_number": "CPF",
+  "phone": "Telefone",
+  "method_pay": "pix"
+}
+Response: { "idTransaction": "TX123", "qrcode": "código", "qr_code_image_url": "url" }</code></pre>
+
+    <h3>Saque (PIX OUT)</h3>
+    <pre><code>POST https://swiftpay.com.br/api/pixout
+Headers: Content-Type: application/json, Accept: application/json
+Body: {
+  "token": "seu_token",
+  "secret": "seu_secret",
+  "baasPostbackUrl": "url_callback",
+  "amount": 100.00,
+  "pixKey": "chave_pix",
+  "pixKeyType": "cpf"
+}
+Response: { "id": "uuid", "amount": 100, "pixKey": "chave", "pixKeyType": "cpf", "withdrawStatusId": "PendingProcessing" }</code></pre>
+  </section>
+
+  <section id="webhook">
+    <h2>Webhook</h2>
+    <p>O SDK e a API enviam POST para sua URL configurada, incluindo dados de status e assinatura HMAC.</p>
+    <pre><code>{
+  "nome": "Cliente Teste",
+  "cpf": "12345678900",
+  "email": "cliente@email.com",
+  "status": "pago"
+}</code></pre>
+  </section>
+
+  <section id="seguranca">
+    <h2>Checklist de Segurança</h2>
+    <ul>
+      <li>Use variáveis no <code>.env</code> e não hardcode tokens.</li>
+      <li>Valide HMAC dos webhooks.</li>
+      <li>Use HTTPS.</li>
+      <li>Restrinja IPs quando possível.</li>
+      <li>Mantenha logs ativos para auditoria.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>SwiftPay SDK & API — Documentação gerada em 19/09/2025 13:55 (America/Sao_Paulo)</p>
+  </footer>
+</body>
+</html>

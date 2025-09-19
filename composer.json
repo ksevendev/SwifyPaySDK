@@ -1,0 +1,18 @@
+{
+  "name": "kseven/swiftpay",
+  "description": "SDK PHP para SwiftPay",
+  "require": {
+    "php": ">=8.0",
+    "guzzlehttp/guzzle": "^7.0",
+    "monolog/monolog": "^3.0",
+    "vlucas/phpdotenv": "^5.0",
+    "symfony/http-foundation": "^6.0",
+    "respect/validation": "^2.0",
+    "ramsey/uuid": "^5.0"
+  },
+  "autoload": {
+    "psr-4": {
+        "SwiftPay\\": "src/" 
+    }
+  }
+}
